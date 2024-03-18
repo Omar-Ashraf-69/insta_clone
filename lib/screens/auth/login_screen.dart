@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:social_app/screens/home_screen.dart';
-import 'package:social_app/screens/register_screen.dart';
+import 'package:social_app/screens/auth/register_screen.dart';
 import 'package:social_app/services/auth.dart';
 import 'package:social_app/widgets/login_register_screen_widgets.dart/app_name_widget.dart';
 import 'package:social_app/widgets/login_register_screen_widgets.dart/custom_button_widget.dart';
@@ -100,6 +100,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   builder: (context) => const HomeScreen(),
                                 ));
                           } else {
+                            // ignore: use_build_context_synchronously
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 content: Text(

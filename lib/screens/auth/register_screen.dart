@@ -119,6 +119,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   builder: (context) => const HomeScreen(),
                                 ));
                           } else {
+                            // ignore: use_build_context_synchronously
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 content: Text(

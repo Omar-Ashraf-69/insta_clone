@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:social_app/colors/app_colors.dart';
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+class SearchScreen extends StatelessWidget {
+  const SearchScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
-      backgroundColor: kPrimaryColor,
+      backgroundColor: Colors.amber,
       appBar: AppBar(),
       body: const Center(
         child: Text(
