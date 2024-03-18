@@ -24,6 +24,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final GlobalKey<FormState> formKey = GlobalKey();
   AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
   bool isLoading = false;
+  String result = '';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -87,19 +88,31 @@ class _LoginScreenState extends State<LoginScreen> {
                       onTap: () async {
                         isLoading = true;
                         setState(() {});
-                        if (formKey.currentState!.validate()) {
-                          await Authentication().signInWithEmailAndPassword(
-                            email: emailController.text,
-                            pass: passController.text,
-                          );
-                          isLoading = false;
-                          setState(() {});
-                          Navigator.pushReplacement(
-                              // ignore: use_build_context_synchronously
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const HomeScreen(),
-                              ));
+                        if (formKey.currentState!.validate())   {
+                          await checkSignStatus();
+                          if (result == 'success') {
+                            isLoading = false;
+                            setState(() {});
+                            Navigator.pushReplacement(
+                                // ignore: use_build_context_synchronously
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const HomeScreen(),
+                                ));
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  result,
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ),
+                            );
+                            isLoading = false;
+                            setState(() {});
+                          }
                         } else {
                           autovalidateMode = AutovalidateMode.always;
                           isLoading = false;
@@ -128,6 +141,13 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  Future<void> checkSignStatus() async {
+    result = await Authentication().signInWithEmailAndPassword(
+      email: emailController.text,
+      pass: passController.text,
     );
   }
 }

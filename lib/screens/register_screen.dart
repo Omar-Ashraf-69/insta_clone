@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:social_app/screens/home_screen.dart';
 import 'package:social_app/services/auth.dart';
@@ -28,6 +27,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final GlobalKey<FormState> formKey = GlobalKey();
   bool isLoading = false;
   AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
+  String result = '';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -99,7 +99,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             )
                           : const Text(
                               'REGISTER',
-                              style:  TextStyle(
+                              style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 20,
                               ),
@@ -108,20 +108,30 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         isLoading = true;
                         setState(() {});
                         if (formKey.currentState!.validate()) {
-                          await Authentication().createUserWithEmailAndPassword(
-                            email: emailController.text,
-                            pass: passController.text,
-                            displayName: nameController.text,
-                            userName: userNameController.text,
-                          );
-                          isLoading = false;
-                          setState(() {});
-                          Navigator.pushReplacement(
-                              // ignore: use_build_context_synchronously
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const HomeScreen(),
-                              ));
+                          await checkRegisteringStatus();
+                          if (result == 'success') {
+                            isLoading = false;
+                            setState(() {});
+                            Navigator.pushReplacement(
+                                // ignore: use_build_context_synchronously
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const HomeScreen(),
+                                ));
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  result,
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ),
+                            );
+                            isLoading = false;
+                            setState(() {});
+                          }
                         } else {
                           autovalidateMode = AutovalidateMode.always;
                           setState(() {});
@@ -145,6 +155,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  Future<void> checkRegisteringStatus() async {
+    result = await Authentication().createUserWithEmailAndPassword(
+      email: emailController.text,
+      pass: passController.text,
+      displayName: nameController.text,
+      userName: userNameController.text,
     );
   }
 }
