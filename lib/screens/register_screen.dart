@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:social_app/screens/register_screen.dart';
 import 'package:social_app/widgets/login_register_screen_widgets.dart/app_name_widget.dart';
 import 'package:social_app/widgets/login_register_screen_widgets.dart/custom_button_widget.dart';
 import 'package:social_app/widgets/login_register_screen_widgets.dart/custom_check_having_email_widget.dart';
@@ -7,13 +6,14 @@ import 'package:social_app/widgets/login_register_screen_widgets.dart/custom_tex
 import 'package:social_app/widgets/login_register_screen_widgets.dart/logo_widget.dart';
 import 'package:social_app/widgets/login_register_screen_widgets.dart/password_text_field_widget.dart';
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+class RegisterScreen extends StatelessWidget {
+  const RegisterScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
+      
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.only(
@@ -25,7 +25,7 @@ class HomeScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               SizedBox(
-                height: size.height * 0.17,
+                height: size.height * 0.1,
               ),
               const LogoWidget(),
               const SizedBox(
@@ -34,6 +34,20 @@ class HomeScreen extends StatelessWidget {
               const AppNameWidget(),
               const SizedBox(
                 height: 20,
+              ),
+              const CustomTextField(
+                icon: Icons.person_outline,
+                label: 'Display Name',
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              const CustomTextField(
+                icon: Icons.atm_outlined,
+                label: 'Username',
+              ),
+              const SizedBox(
+                height: 15,
               ),
               const CustomTextField(
                 icon: Icons.email_outlined,
@@ -53,14 +67,10 @@ class HomeScreen extends StatelessWidget {
                 height: 15,
               ),
               CustomCheckHavingEmailWidget(
-                checkingMessage: "Don't have an account?  ",
-                actionMessage: 'Register Now.',
+                checkingMessage: "Have an account?  ",
+                actionMessage: 'Login Now.',
                 onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const RegisterScreen(),
-                      ));
+                  Navigator.pop(context);
                 },
               ),
             ],
