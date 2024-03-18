@@ -11,69 +11,68 @@ class RegisterScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return Scaffold(
       
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.only(
-            left: 12,
-            right: 12,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(
-                height: size.height * 0.1,
-              ),
-              const LogoWidget(),
-              const SizedBox(
-                height: 25,
-              ),
-              const AppNameWidget(),
-              const SizedBox(
-                height: 20,
-              ),
-              const CustomTextField(
-                icon: Icons.person_outline,
-                label: 'Display Name',
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              const CustomTextField(
-                icon: Icons.atm_outlined,
-                label: 'Username',
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              const CustomTextField(
-                icon: Icons.email_outlined,
-                label: 'Email',
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              const PasswordTextField(),
-              const SizedBox(
-                height: 25,
-              ),
-              const CustomButtonWidget(
-                label: 'LOGIN',
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              CustomCheckHavingEmailWidget(
-                checkingMessage: "Have an account?  ",
-                actionMessage: 'Login Now.',
-                onTap: () {
-                  Navigator.pop(context);
-                },
-              ),
-            ],
+      body: Center(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.only(
+              left: 12,
+              right: 12,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                
+                const LogoWidget(),
+                const SizedBox(
+                  height: 25,
+                ),
+                const AppNameWidget(),
+                const SizedBox(
+                  height: 20,
+                ),
+                const CustomTextField(
+                  icon: Icons.person_outline,
+                  label: 'Display Name',
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                const CustomTextField(
+                  icon: Icons.atm_outlined,
+                  label: 'Username',
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                const CustomTextField(
+                  icon: Icons.email_outlined,
+                  label: 'Email',
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                const PasswordTextField(),
+                const SizedBox(
+                  height: 25,
+                ),
+                const CustomButtonWidget(
+                  label: 'LOGIN',
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                CustomCheckHavingEmailWidget(
+                  checkingMessage: "Have an account?  ",
+                  actionMessage: 'Login Now.',
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),

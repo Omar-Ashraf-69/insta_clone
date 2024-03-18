@@ -12,58 +12,56 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.only(
-            left: 12,
-            right: 12,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(
-                height: size.height * 0.17,
-              ),
-              const LogoWidget(),
-              const SizedBox(
-                height: 25,
-              ),
-              const AppNameWidget(),
-              const SizedBox(
-                height: 20,
-              ),
-              const CustomTextField(
-                icon: Icons.email_outlined,
-                label: 'Email',
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              const PasswordTextField(),
-              const SizedBox(
-                height: 25,
-              ),
-              const CustomButtonWidget(
-                label: 'LOGIN',
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              CustomCheckHavingEmailWidget(
-                checkingMessage: "Don't have an account?  ",
-                actionMessage: 'Register Now.',
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const RegisterScreen(),
-                      ));
-                },
-              ),
-            ],
+      body: Center(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.only(
+              left: 12,
+              right: 12,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const LogoWidget(),
+                const SizedBox(
+                  height: 25,
+                ),
+                const AppNameWidget(),
+                const SizedBox(
+                  height: 20,
+                ),
+                const CustomTextField(
+                  icon: Icons.email_outlined,
+                  label: 'Email',
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                const PasswordTextField(),
+                const SizedBox(
+                  height: 25,
+                ),
+                const CustomButtonWidget(
+                  label: 'LOGIN',
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                CustomCheckHavingEmailWidget(
+                  checkingMessage: "Don't have an account?  ",
+                  actionMessage: 'Register Now.',
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const RegisterScreen(),
+                        ));
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),
