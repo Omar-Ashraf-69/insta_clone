@@ -5,12 +5,14 @@ import 'package:social_app/colors/app_colors.dart';
 class CustomButtonWidget extends StatelessWidget {
   const CustomButtonWidget({
     super.key,
-    required this.label,
+    required this.label, this.onTap,
   });
-  final String label;
+  final Widget label;
+  final void Function()? onTap;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
@@ -21,13 +23,7 @@ class CustomButtonWidget extends StatelessWidget {
           vertical: 15,
         ),
         child: Center(
-          child: Text(
-            label,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 20,
-            ),
-          ),
+          child: label,
         ),
       ),
     );

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:social_app/colors/app_colors.dart';
 
@@ -7,13 +6,22 @@ class CustomTextField extends StatelessWidget {
     super.key,
     required this.label,
     required this.icon,
+    required this.textEditingController,
   });
+  final TextEditingController textEditingController;
   final String label;
   final IconData icon;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: textEditingController,
       keyboardType: TextInputType.emailAddress,
+      validator: (value) {
+        if (value?.isEmpty ?? true) {
+          return "$label can't be empty.";
+        }
+        return null;
+      },
       decoration: InputDecoration(
         prefixIcon: Icon(icon),
         label: Text(
@@ -36,4 +44,3 @@ class CustomTextField extends StatelessWidget {
     );
   }
 }
-

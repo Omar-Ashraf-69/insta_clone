@@ -1,6 +1,6 @@
-
 import 'package:flutter/material.dart';
 import 'package:social_app/screens/home_screen.dart';
+import 'package:social_app/screens/register_screen.dart';
 import 'package:social_app/services/auth.dart';
 import 'package:social_app/widgets/login_register_screen_widgets.dart/app_name_widget.dart';
 import 'package:social_app/widgets/login_register_screen_widgets.dart/custom_button_widget.dart';
@@ -9,25 +9,21 @@ import 'package:social_app/widgets/login_register_screen_widgets.dart/custom_tex
 import 'package:social_app/widgets/login_register_screen_widgets.dart/logo_widget.dart';
 import 'package:social_app/widgets/login_register_screen_widgets.dart/password_text_field_widget.dart';
 
-class RegisterScreen extends StatefulWidget {
-  const RegisterScreen({super.key});
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
 
   @override
-  State<RegisterScreen> createState() => _RegisterScreenState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _RegisterScreenState extends State<RegisterScreen> {
-  final TextEditingController nameController = TextEditingController();
-
-  final TextEditingController userNameController = TextEditingController();
-
+class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController passController = TextEditingController();
 
   final TextEditingController emailController = TextEditingController();
   bool isPass = true;
   final GlobalKey<FormState> formKey = GlobalKey();
-  bool isLoading = false;
   AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
+  bool isLoading = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,22 +52,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       height: 20,
                     ),
                     CustomTextField(
-                      textEditingController: nameController,
-                      icon: Icons.person_outline,
-                      label: 'Display Name',
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    CustomTextField(
-                      textEditingController: userNameController,
-                      icon: Icons.atm_outlined,
-                      label: 'Username',
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    CustomTextField(
                       textEditingController: emailController,
                       icon: Icons.email_outlined,
                       label: 'Email',
@@ -98,8 +78,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               ),
                             )
                           : const Text(
-                              'REGISTER',
-                              style:  TextStyle(
+                              'LOGIN',
+                              style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 20,
                               ),
@@ -108,11 +88,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         isLoading = true;
                         setState(() {});
                         if (formKey.currentState!.validate()) {
-                          await Authentication().createUserWithEmailAndPassword(
+                          await Authentication().signInWithEmailAndPassword(
                             email: emailController.text,
                             pass: passController.text,
-                            displayName: nameController.text,
-                            userName: userNameController.text,
                           );
                           isLoading = false;
                           setState(() {});
@@ -124,6 +102,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               ));
                         } else {
                           autovalidateMode = AutovalidateMode.always;
+                          isLoading = false;
                           setState(() {});
                         }
                       },
@@ -132,10 +111,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       height: 15,
                     ),
                     CustomCheckHavingEmailWidget(
-                      checkingMessage: "Have an account?  ",
-                      actionMessage: 'Login Now.',
+                      checkingMessage: "Don't have an account?  ",
+                      actionMessage: 'Register Now.',
                       onTap: () {
-                        Navigator.pop(context);
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const RegisterScreen(),
+                            ));
                       },
                     ),
                   ],
