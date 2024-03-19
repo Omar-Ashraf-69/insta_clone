@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:social_app/layout.dart';
 import 'package:social_app/screens/auth/login_screen.dart';
-import 'package:social_app/screens/home_screen.dart';
 import 'package:social_app/services/auth.dart';
 import 'package:social_app/widgets/login_register_screen_widgets.dart/app_name_widget.dart';
 import 'package:social_app/widgets/login_register_screen_widgets.dart/custom_button_widget.dart';

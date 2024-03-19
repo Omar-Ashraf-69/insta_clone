@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:social_app/firebase_options.dart';
 import 'package:social_app/layout.dart';
+import 'package:social_app/screens/add_screen.dart';
 import 'package:social_app/screens/auth/login_screen.dart';
 
 void main() async {
@@ -24,16 +25,16 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         useMaterial3: true,
       ),
-      home: StreamBuilder<User?>(
-        stream: FirebaseAuth.instance.authStateChanges(),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return const  LayoutWidget();
-          } else {
-            return const LoginScreen();
-          }
-        },
-      ),
+      home: const AddScreen(), //StreamBuilder<User?>(
+      //   stream: FirebaseAuth.instance.authStateChanges(),
+      //   builder: (context, snapshot) {
+      //     if (snapshot.hasData) {
+      //       return const  LayoutWidget();
+      //     } else {
+      //       return const LoginScreen();
+      //     }
+      //   },
+      // ),
     );
   }
 }

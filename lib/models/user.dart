@@ -8,11 +8,11 @@ class UserModel {
   List followers;
   List following;
   String displayName;
-  String bio;
+  String userName;
 
   UserModel({
     required this.userId,
-    required this.bio,
+    required this.userName,
     required this.displayName,
     required this.email,
     required this.followers,
@@ -25,7 +25,7 @@ class UserModel {
     Map<String, dynamic> snapshot = snap.data() as Map<String, dynamic>;
     return UserModel(
       userId: snapshot['userId'],
-      bio: snapshot['bio'],
+      userName: snapshot['bio'],
       displayName: snapshot['displayName'],
       email: snapshot['email'],
       followers: snapshot['followers'],
@@ -37,14 +37,14 @@ class UserModel {
 
   Map<String, dynamic> toJson() {
     return {
-      'userId':userId,
-      'bio':bio,
-      'displayName':displayName,
-      'email':email,
-      'followers':followers,
-      'following':following,
-      'password':password,
-      'profilePic':profilePic,
+      'userId': userId,
+      'bio': userName,
+      'displayName': displayName,
+      'email': email,
+      'followers': followers,
+      'following': following,
+      'password': password,
+      'profilePic': profilePic,
     };
   }
 }
