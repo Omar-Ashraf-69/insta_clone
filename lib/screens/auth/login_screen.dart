@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:social_app/layout.dart';
 import 'package:social_app/screens/home_screen.dart';
 import 'package:social_app/screens/auth/register_screen.dart';
 import 'package:social_app/services/auth.dart';
@@ -88,7 +89,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       onTap: () async {
                         isLoading = true;
                         setState(() {});
-                        if (formKey.currentState!.validate())   {
+                        if (formKey.currentState!.validate()) {
+                          FocusScope.of(context).unfocus();
                           await checkSignStatus();
                           if (result == 'success') {
                             isLoading = false;
@@ -97,7 +99,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 // ignore: use_build_context_synchronously
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const HomeScreen(),
+                                  builder: (context) => const LayoutWidget(),
                                 ));
                           } else {
                             // ignore: use_build_context_synchronously
@@ -128,11 +130,13 @@ class _LoginScreenState extends State<LoginScreen> {
                       checkingMessage: "Don't have an account?  ",
                       actionMessage: 'Register Now.',
                       onTap: () {
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const RegisterScreen(),
-                            ));
+                        Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const RegisterScreen(),
+                          ),
+                          (route) => false,
+                        );
                       },
                     ),
                   ],

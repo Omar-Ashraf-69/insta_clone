@@ -2,7 +2,9 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:social_app/models/user.dart';
+import 'package:social_app/screens/auth/login_screen.dart';
 
 class Authentication {
   Future<String> createUserWithEmailAndPassword(
@@ -78,7 +80,13 @@ class Authentication {
     return message;
   }
 
-  Future<void> signOut() async {
+  Future<void> signOut(context) async {
     await FirebaseAuth.instance.signOut();
+    Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const LoginScreen(),
+        ),
+        (route) => false);
   }
 }

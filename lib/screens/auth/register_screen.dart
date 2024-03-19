@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:social_app/layout.dart';
+import 'package:social_app/screens/auth/login_screen.dart';
 import 'package:social_app/screens/home_screen.dart';
 import 'package:social_app/services/auth.dart';
 import 'package:social_app/widgets/login_register_screen_widgets.dart/app_name_widget.dart';
@@ -108,6 +110,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         isLoading = true;
                         setState(() {});
                         if (formKey.currentState!.validate()) {
+                          FocusScope.of(context).unfocus();
                           await checkRegisteringStatus();
                           if (result == 'success') {
                             isLoading = false;
@@ -116,7 +119,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 // ignore: use_build_context_synchronously
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const HomeScreen(),
+                                  builder: (context) => const LayoutWidget(),
                                 ));
                           } else {
                             // ignore: use_build_context_synchronously
@@ -146,7 +149,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       checkingMessage: "Have an account?  ",
                       actionMessage: 'Login Now.',
                       onTap: () {
-                        Navigator.pop(context);
+                        Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const LoginScreen(),
+                            ),
+                            (route) => false);
                       },
                     ),
                   ],
