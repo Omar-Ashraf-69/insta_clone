@@ -1,10 +1,18 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:social_app/colors/app_colors.dart';
+import 'dart:typed_data';
 
-class AddScreen extends StatelessWidget {
+import 'package:flutter/material.dart';
+import 'package:social_app/colors/app_colors.dart';
+import 'package:social_app/helpers/picker.dart';
+
+class AddScreen extends StatefulWidget {
   const AddScreen({super.key});
+
+  @override
+  State<AddScreen> createState() => _AddScreenState();
+}
+
+class _AddScreenState extends State<AddScreen> {
+  Uint8List? file;
 
   @override
   Widget build(BuildContext context) {
@@ -72,18 +80,25 @@ class AddScreen extends StatelessWidget {
               height: 10,
             ),
             Expanded(
-                child: Container(
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage('assets/woman.png'),
-                ),
-              ),
-            )),
+                child: file == null
+                    ? Container()
+                    : Container(
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: MemoryImage(file!),
+                            fit: BoxFit.cover,
+                          ),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      )),
             const SizedBox(
-              height: 10,
+              height: 40,
             ),
             GestureDetector(
-              onTap: () {},
+              onTap: () async {
+                file = await pickImage();
+                setState(() {});
+              },
               child: CircleAvatar(
                 backgroundColor: kPrimaryColor,
                 radius: 35,
