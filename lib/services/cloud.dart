@@ -1,7 +1,9 @@
 import 'dart:developer';
+import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:social_app/models/post.dart';
+import 'package:social_app/services/storage.dart';
 import 'package:uuid/uuid.dart';
 
 class CloudMethods {
@@ -12,11 +14,12 @@ class CloudMethods {
     String? profilePic,
     required String displayName,
     required String userName,
-    required String postPic,
+    required Uint8List file,
     required String description,
-  }) async {
+  }) async  {
     String response;
     String postId = const Uuid().v1();
+    String postPic = await StorageMethods().uploadImageToStorage(file);
     PostModel postModel = PostModel(
       userId: userId,
       date: DateTime.now(),

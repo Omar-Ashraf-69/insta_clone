@@ -21,7 +21,7 @@ class Authentication {
       );
       UserModel userModel = UserModel(
         userId: userCredential.user!.uid,
-        userName: '',
+        userName: userName,
         displayName: displayName,
         email: email,
         followers: [],

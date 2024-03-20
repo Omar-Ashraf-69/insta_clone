@@ -25,7 +25,7 @@ class UserModel {
     Map<String, dynamic> snapshot = snap.data() as Map<String, dynamic>;
     return UserModel(
       userId: snapshot['userId'],
-      userName: snapshot['bio'],
+      userName: snapshot['username'],
       displayName: snapshot['displayName'],
       email: snapshot['email'],
       followers: snapshot['followers'],
@@ -38,7 +38,7 @@ class UserModel {
   Map<String, dynamic> toJson() {
     return {
       'userId': userId,
-      'bio': userName,
+      'userName': userName,
       'displayName': displayName,
       'email': email,
       'followers': followers,
