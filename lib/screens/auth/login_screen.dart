@@ -54,7 +54,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     CustomTextField(
                       textEditingController: emailController,
-                      icon: Icons.email_outlined,
+                      prefixIcon:const Icon(Icons.email_outlined),
                       label: 'Email',
                     ),
                     const SizedBox(

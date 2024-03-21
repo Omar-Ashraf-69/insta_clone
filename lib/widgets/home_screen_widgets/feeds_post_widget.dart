@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:social_app/models/post.dart';
@@ -32,13 +31,15 @@ class FeedPostWidget extends StatelessWidget {
                   padding: const EdgeInsets.only(bottom: 12.0),
                   child: Row(
                     children: [
-                      postModel.postPic ==''? CircleAvatar(
-                        radius: 24,
-                        child: Image.asset('assets/man.png'),
-                      ):CircleAvatar(
-                        radius: 24,
-                        child: Image.network(postModel.postPic),
-                      ),
+                      postModel.profilePic == ''
+                          ? CircleAvatar(
+                              radius: 24,
+                              child: Image.asset('assets/man.png'),
+                            )
+                          : CircleAvatar(
+                              radius: 24,
+                              child: Image.network(postModel.profilePic),
+                            ),
                       const SizedBox(
                         width: 15,
                       ),

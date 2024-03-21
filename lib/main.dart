@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:social_app/firebase_options.dart';
 import 'package:social_app/layout.dart';
 import 'package:social_app/screens/auth/login_screen.dart';
+import 'package:social_app/screens/search_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

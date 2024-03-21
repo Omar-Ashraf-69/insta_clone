@@ -58,7 +58,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                     CustomTextField(
                       textEditingController: nameController,
-                      icon: Icons.person_outline,
+                      prefixIcon: const Icon(Icons.person_outline),
                       label: 'Display Name',
                     ),
                     const SizedBox(
@@ -66,7 +66,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                     CustomTextField(
                       textEditingController: userNameController,
-                      icon: Icons.atm_outlined,
+                      prefixIcon:const Icon(Icons.atm_outlined),
                       label: 'Username',
                     ),
                     const SizedBox(
@@ -74,7 +74,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                     CustomTextField(
                       textEditingController: emailController,
-                      icon: Icons.email_outlined,
+                      prefixIcon:const Icon(Icons.email_outlined),
                       label: 'Email',
                     ),
                     const SizedBox(

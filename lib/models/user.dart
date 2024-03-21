@@ -25,7 +25,7 @@ class UserModel {
     Map<String, dynamic> snapshot = snap.data() as Map<String, dynamic>;
     return UserModel(
       userId: snapshot['userId'],
-      userName: snapshot['username'],
+      userName: snapshot['userName'],
       displayName: snapshot['displayName'],
       email: snapshot['email'],
       followers: snapshot['followers'],

@@ -41,7 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: StreamBuilder<QuerySnapshot>(
         stream: postsStream,
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) {
             return const Text('Something went wrong');
           }
@@ -51,10 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: CircularProgressIndicator(),
             );
           }
-          // List<PostModel> posts = [];
-          // for (int i = 0; i < snapshot.data!.docs.length; i++) {
-          //   posts.add(PostModel.fromDocument(snapshot.data!.docs[i]));
-          // }
+          
           return Padding(
             padding: const EdgeInsets.symmetric(
               vertical: 12.0,
