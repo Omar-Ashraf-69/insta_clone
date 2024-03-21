@@ -37,7 +37,7 @@ class CloudMethods {
           .doc(postId)
           .set(postModel.toJson());
       log("Success Brooooo");
-      response = 'succes';
+      response = 'success';
     } catch (e) {
       log("Error Broooooo");
       response = e.toString();

@@ -1,8 +1,6 @@
 import 'dart:developer';
 import 'dart:typed_data';
 
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:social_app/colors/app_colors.dart';
 import 'package:social_app/helpers/picker.dart';
@@ -18,6 +16,7 @@ class AddScreen extends StatefulWidget {
 class _AddScreenState extends State<AddScreen> {
   Uint8List? file;
   TextEditingController controller = TextEditingController();
+  bool isLoading = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,14 +36,17 @@ class _AddScreenState extends State<AddScreen> {
             ),
             child: TextButton(
                 onPressed: () {
+                  FocusScope.of(context).unfocus();
                   uploadPost();
                 },
-                child: const Text(
-                  "Post",
-                  style: TextStyle(
-                    fontSize: 16,
-                  ),
-                )),
+                child: isLoading
+                    ? const CircularProgressIndicator()
+                    : const Text(
+                        "Post",
+                        style: TextStyle(
+                          fontSize: 16,
+                        ),
+                      )),
           ),
         ],
       ),
@@ -123,6 +125,8 @@ class _AddScreenState extends State<AddScreen> {
   }
 
   uploadPost() async {
+    isLoading = true;
+    setState(() {});
     try {
       String response = await CloudMethods().addPost(
         userId: 'azGGLKYKuzYJlwBkPz1BC7OBPwg1',
@@ -134,5 +138,9 @@ class _AddScreenState extends State<AddScreen> {
     } catch (e) {
       log(e.toString());
     }
+    isLoading = false;
+    setState(() {
+      
+    });
   }
 }

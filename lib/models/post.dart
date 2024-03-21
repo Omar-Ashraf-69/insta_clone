@@ -24,26 +24,28 @@ class PostModel {
   });
 
   factory PostModel.fromDocument(DocumentSnapshot snap) {
-    Map<String, dynamic> snapshot = snap.data() as Map<String, dynamic>;
-    return PostModel(
-      userId: snapshot['userId'],
-      date: snapshot['bio'],
-      displayName: snapshot['displayName'],
-      description: snapshot['description'],
-      like: snapshot['like'],
-      postId: snapshot['postId'],
-      postPic: snapshot['postPic'],
-      profilePic: snapshot['profilePic'],
-      userName: snapshot['userName'],
-    );
-  }
+  Map<String, dynamic> snapshot = snap.data() as Map<String, dynamic>;
+  Timestamp timestamp = snapshot['date'] as Timestamp;
+  DateTime date = timestamp.toDate(); // Convert Timestamp to DateTime
+  return PostModel(
+    userId: snapshot['userId'],
+    date: date,
+    displayName: snapshot['displayName'],
+    description: snapshot['description'],
+    like: snapshot['like'],
+    postId: snapshot['postId'],
+    postPic: snapshot['postPic'],
+    profilePic: snapshot['profilePic'],
+    userName: snapshot['userName'],
+  );
+}
 
   Map<String, dynamic> toJson() {
     return {
       'userId': userId,
-      'bio': date,
+      'date': date,
       'displayName': displayName,
-      'like':like ,
+      'like': like,
       'userName': userName,
       'profilePic': profilePic,
       'postPic': postPic,
