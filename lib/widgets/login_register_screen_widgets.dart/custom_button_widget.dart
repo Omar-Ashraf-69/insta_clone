@@ -1,14 +1,16 @@
-
 import 'package:flutter/material.dart';
 import 'package:social_app/colors/app_colors.dart';
 
 class CustomButtonWidget extends StatelessWidget {
   const CustomButtonWidget({
     super.key,
-    required this.label, this.onTap,
+    required this.label,
+    this.onTap,
+    this.buttonColor,
   });
   final Widget label;
   final void Function()? onTap;
+  final Color? buttonColor;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -16,7 +18,7 @@ class CustomButtonWidget extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
-          color: kPrimaryColor,
+          color: buttonColor ?? kPrimaryColor,
         ),
         width: double.infinity,
         padding: const EdgeInsets.symmetric(

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:social_app/colors/app_colors.dart';
 import 'package:social_app/models/user.dart';
 import 'package:social_app/widgets/login_register_screen_widgets.dart/custom_text_field.dart';
+import 'package:social_app/widgets/search_screen_widgets/searched_user_item_widget.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
@@ -88,40 +89,6 @@ class _SearchScreenState extends State<SearchScreen> {
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class SearchedUserItemWidget extends StatelessWidget {
-  const SearchedUserItemWidget({
-    super.key,
-    required this.userModel,
-  });
-  final UserModel userModel;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10.0),
-      child: ListTile(
-        leading: userModel.profilePic == ''
-            ? CircleAvatar(
-                radius: 24,
-                child: Image.asset('assets/man.png'),
-              )
-            : CircleAvatar(
-                radius: 24,
-                child: Image.network(userModel.profilePic),
-              ),
-        title: Text(
-          userModel.displayName,
-          style: const TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-        subtitle: Text("@${userModel.userName}"),
       ),
     );
   }
