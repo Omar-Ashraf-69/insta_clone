@@ -1,12 +1,40 @@
-import 'package:flutter/material.dart';
-import 'package:social_app/colors/app_colors.dart';
-import 'package:social_app/services/auth.dart';
-import 'package:social_app/widgets/login_register_screen_widgets.dart/custom_button_widget.dart';
+import 'dart:developer';
 
-class ProfileScreen extends StatelessWidget {
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:image_stack/image_stack.dart';
+import 'package:social_app/colors/app_colors.dart';
+import 'package:social_app/models/post.dart';
+import 'package:social_app/services/auth.dart';
+import 'package:social_app/widgets/home_screen_widgets/feeds_post_widget.dart';
+import 'package:social_app/widgets/login_register_screen_widgets.dart/custom_button_widget.dart';
+import 'package:social_app/widgets/shimmer_image_container_widget.dart';
+
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
 
   @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen>
+    with TickerProviderStateMixin {
+  @override
+  late TabController tabController = TabController(length: 2, vsync: this);
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    tabController.dispose();
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -43,28 +71,66 @@ class ProfileScreen extends StatelessWidget {
                 ),
               ],
             ),
-            ListTile(
-              contentPadding: EdgeInsets.all(0),
-              title: Text(
-                "KKK",
-                style: TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 20,
+            Row(
+              children: [
+                Expanded(
+                  child: ListTile(
+                    contentPadding: EdgeInsets.all(0),
+                    title: Text(
+                      "KKK",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 20,
+                      ),
+                    ),
+                    subtitle: Text(
+                      "@omar",
+                      style: TextStyle(
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-              subtitle: Text(
-                "@omar",
-                style: TextStyle(
-                  color: Colors.grey,
+                ElevatedButton(
+                  onPressed: () {},
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text('Follow'),
+                      Icon(Icons.add),
+                    ],
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: kSeconderyColor,
+                    foregroundColor: kWhiteColor,
+                  ),
                 ),
-              ),
+                SizedBox(
+                  width: 10,
+                ),
+                IconButton(
+                  onPressed: () {},
+                  icon: Icon(
+                    Icons.message,
+                  ),
+                  style: IconButton.styleFrom(
+                    foregroundColor: kSeconderyColor,
+                    backgroundColor: kWhiteColor,
+                    shape: CircleBorder(
+                      side: BorderSide(
+                        color: kSeconderyColor,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
             SizedBox(
               height: 10,
             ),
             CustomButtonWidget(
               label: Text(
-                "aaa",
+                "BIO",
                 style: TextStyle(
                   color: kPrimaryColor,
                   fontWeight: FontWeight.w500,
@@ -75,30 +141,106 @@ class ProfileScreen extends StatelessWidget {
             SizedBox(
               height: 30,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Text(
-                  'Photos',
-                  style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                  ),
+            TabBar(
+              controller: tabController,
+              indicatorColor: kSeconderyColor,
+              labelColor: kPrimaryColor,
+              tabs: [
+                Tab(
+                  text: 'Photos',
                 ),
-                Text(
-                  'Posts',
-                  style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                  ),
+                Tab(
+                  text: 'Posts',
                 ),
               ],
             ),
-            Divider(
-              thickness: 0.3,
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.only(top: 12.0),
+                child: TabBarView(
+                  controller: tabController,
+                  children: <Widget>[
+                    StreamBuilder<QuerySnapshot>(
+                      stream: getPostsStream(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Center(
+                              child: CircularProgressIndicator());
+                        } else if (snapshot.hasError) {
+                          log('Error: ${snapshot.error}');
+                          return Text('Error: ${snapshot.error}');
+                        } else if (snapshot.data == null ||
+                            snapshot.data!.docs.isEmpty) {
+                          return const Text(
+                              'No Photos found'); // Handle case when no photos are found
+                        } else {
+                          return GridView.builder(
+                            itemCount: snapshot.data!.docs.length,
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              crossAxisSpacing: 10,
+                              mainAxisSpacing: 10,
+                            ),
+                            itemBuilder: (context, index) {
+                              return ShimmerImageContainer(
+                                imageUrl: PostModel.fromDocument(
+                                        snapshot.data!.docs[index])
+                                    .postPic,
+                              );
+                            },
+                          );
+                        }
+                      },
+                    ),
+                    StreamBuilder<QuerySnapshot>(
+                      stream: getPostsStream(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Center(
+                              child: CircularProgressIndicator());
+                        } else if (snapshot.hasError) {
+                          log('Error: ${snapshot.error}');
+                          return Text('Error: ${snapshot.error}');
+                        } else if (snapshot.data == null ||
+                            snapshot.data!.docs.isEmpty) {
+                          return const Text(
+                              'No Photos found'); // Handle case when no photos are found
+                        } else {
+                          return ListView.builder(
+                            itemCount: snapshot.data!.docs.length,
+                            itemBuilder: (context, index) {
+                              return FeedPostWidget(
+                                postModel: PostModel.fromDocument(
+                                    snapshot.data!.docs[index]),
+                              );
+                            },
+                          );
+                        }
+                      },
+                    ),
+                  ],
+                ),
+              ),
             ),
           ],
         ),
       ),
     );
+  }
+
+  Stream<QuerySnapshot> getPostsStream() {
+    String currentUserUid = FirebaseAuth.instance.currentUser!.uid;
+
+    return FirebaseFirestore.instance
+        .collection('posts')
+        .where('userId',
+            isEqualTo:
+                currentUserUid) // Assuming 'userId' field in Firestore represents the user's UID
+        .orderBy('date', descending: true)
+        .snapshots();
   }
 }
 
@@ -123,20 +265,16 @@ class FollowingCardWidget extends StatelessWidget {
         ),
         child: Column(
           children: [
-            Row(
-              children: [
-                CircleAvatar(
-                  radius: 15,
-                  backgroundImage: AssetImage('assets/man.png'),
-                ),
-                SizedBox(
-                  width: 5,
-                ),
-                CircleAvatar(
-                  radius: 15,
-                  backgroundImage: AssetImage('assets/woman.png'),
-                ),
+            ImageStack(
+              imageSource: ImageSource.Asset,
+              imageList: [
+                'assets/man.png',
+                'assets/woman.png',
               ],
+              imageRadius: 30,
+              totalCount: 0,
+              imageBorderWidth: 2,
+              imageBorderColor: kWhiteColor,
             ),
             Text("0 $label"),
           ],

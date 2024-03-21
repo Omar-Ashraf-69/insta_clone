@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:social_app/models/post.dart';
+import 'package:social_app/widgets/shimmer_image_container_widget.dart';
 
 class FeedPostWidget extends StatelessWidget {
   const FeedPostWidget({
@@ -62,16 +64,19 @@ class FeedPostWidget extends StatelessWidget {
                     ],
                   ),
                 ),
-                Container(
-                  height: 300,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                    image: DecorationImage(
-                      image: NetworkImage(postModel.postPic),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
+                SizedBox(
+                    width: double.infinity,
+                    child: ShimmerImageContainer(imageUrl: postModel.postPic)),
+                // Container(
+                //   height: 300,
+                //   decoration: BoxDecoration(
+                //     borderRadius: BorderRadius.circular(12),
+                //     image: DecorationImage(
+                //       image: NetworkImage(postModel.postPic),
+                //       fit: BoxFit.cover,
+                //     ),
+                //   ),
+                // ),
                 const SizedBox(
                   height: 15,
                 ),
