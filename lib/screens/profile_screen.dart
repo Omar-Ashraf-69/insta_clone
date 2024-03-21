@@ -6,8 +6,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:image_stack/image_stack.dart';
+import 'package:provider/provider.dart';
 import 'package:social_app/colors/app_colors.dart';
 import 'package:social_app/models/post.dart';
+import 'package:social_app/models/user.dart';
+import 'package:social_app/providers/user_provider.dart';
 import 'package:social_app/services/auth.dart';
 import 'package:social_app/widgets/home_screen_widgets/feeds_post_widget.dart';
 import 'package:social_app/widgets/login_register_screen_widgets.dart/custom_button_widget.dart';
@@ -36,6 +39,7 @@ class _ProfileScreenState extends State<ProfileScreen>
   }
 
   Widget build(BuildContext context) {
+    final UserModel user = Provider.of<UserProvider>(context).user!;
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -77,7 +81,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                   child: ListTile(
                     contentPadding: EdgeInsets.all(0),
                     title: Text(
-                      "KKK",
+                      user.displayName,
                       style: TextStyle(
                         fontWeight: FontWeight.w500,
                         fontSize: 20,

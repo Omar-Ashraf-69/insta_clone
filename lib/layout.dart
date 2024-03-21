@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
 import 'package:social_app/colors/app_colors.dart';
+import 'package:social_app/providers/user_provider.dart';
 import 'package:social_app/screens/add_screen.dart';
 import 'package:social_app/screens/home_screen.dart';
 import 'package:social_app/screens/profile_screen.dart';
@@ -19,8 +21,14 @@ class _LayoutWidgetState extends State<LayoutWidget> {
   PageController pageController = PageController();
 
   @override
+  void initState() {
+    Provider.of<UserProvider>(context, listen: false).getUserDetails();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Provider.of<UserProvider>(context).isLoading?  const Scaffold(body: Center(child: CircularProgressIndicator(),),): Scaffold(
       extendBody: true,
       body: PageView(
         controller: pageController,

@@ -7,6 +7,13 @@ import 'package:social_app/models/user.dart';
 import 'package:social_app/screens/auth/login_screen.dart';
 
 class Authentication {
+  getUserDetails() async {
+    User currentUser = FirebaseAuth.instance.currentUser!;
+    DocumentSnapshot documentSnapshot =
+        await FirebaseFirestore.instance.collection('users').doc(currentUser.uid).get();
+    return UserModel.fromDocument(documentSnapshot);
+  }
+
   Future<String> createUserWithEmailAndPassword(
       {required String email,
       required String pass,
