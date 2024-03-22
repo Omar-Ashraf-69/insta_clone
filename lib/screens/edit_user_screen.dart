@@ -147,6 +147,7 @@ class _EditUserScreenState extends State<EditUserScreen> {
                     bio: bioController.text.isEmpty ? "" : bioController.text,
                     file: profilePic,
                     uId: userData.userId,
+                    context: context,
                   );
                   setState(() {
                     isUpdating = false;
@@ -166,6 +167,7 @@ class _EditUserScreenState extends State<EditUserScreen> {
     required String bio,
     Uint8List? file,
     required String uId,
+    required BuildContext context,
   }) async {
     String res = await CloudMethods().editProfile(
       displayName: displayName,

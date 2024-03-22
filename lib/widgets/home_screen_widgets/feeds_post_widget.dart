@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:social_app/models/post.dart';
+import 'package:social_app/screens/auth/comment_screen.dart';
 import 'package:social_app/widgets/shimmer_image_container_widget.dart';
 
 class FeedPostWidget extends StatelessWidget {
@@ -106,7 +107,14 @@ class FeedPostWidget extends StatelessWidget {
                             left: 12,
                           ),
                           child: IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        const CommentScreen(),
+                                  ));
+                            },
                             icon: const Icon(Icons.comment_outlined),
                           )),
                       const Text('12'),
