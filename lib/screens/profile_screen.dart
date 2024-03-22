@@ -11,6 +11,7 @@ import 'package:social_app/colors/app_colors.dart';
 import 'package:social_app/models/post.dart';
 import 'package:social_app/models/user.dart';
 import 'package:social_app/providers/user_provider.dart';
+import 'package:social_app/screens/edit_user_screen.dart';
 import 'package:social_app/services/auth.dart';
 import 'package:social_app/widgets/home_screen_widgets/feeds_post_widget.dart';
 import 'package:social_app/widgets/login_register_screen_widgets.dart/custom_button_widget.dart';
@@ -29,6 +30,7 @@ class _ProfileScreenState extends State<ProfileScreen>
   late TabController tabController = TabController(length: 2, vsync: this);
   @override
   void initState() {
+    Provider.of<UserProvider>(context, listen: false).getUserDetails();
     super.initState();
   }
 
@@ -44,7 +46,14 @@ class _ProfileScreenState extends State<ProfileScreen>
       appBar: AppBar(
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const EditUserScreen(),
+                ),
+              );
+            },
             icon: const Icon(Icons.edit_outlined),
           ),
           IconButton(
@@ -62,10 +71,15 @@ class _ProfileScreenState extends State<ProfileScreen>
           children: [
             Row(
               children: [
-                CircleAvatar(
-                  radius: 34,
-                  backgroundImage: AssetImage('assets/valley of the kings.jpg'),
-                ),
+                user.profilePic == ''
+                    ? const CircleAvatar(
+                        radius: 34,
+                        backgroundImage: AssetImage('assets/man.png'),
+                      )
+                    : CircleAvatar(
+                        radius: 34,
+                        backgroundImage: NetworkImage(user.profilePic),
+                      ),
                 Spacer(),
                 FollowingCardWidget(
                   label: 'Followers',
@@ -88,8 +102,8 @@ class _ProfileScreenState extends State<ProfileScreen>
                       ),
                     ),
                     subtitle: Text(
-                      "@omar",
-                      style: TextStyle(
+                      "@${user.userName}",
+                      style: const TextStyle(
                         color: Colors.grey,
                       ),
                     ),

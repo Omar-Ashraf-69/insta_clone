@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
@@ -28,52 +29,75 @@ class _LayoutWidgetState extends State<LayoutWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Provider.of<UserProvider>(context).isLoading?  const Scaffold(body: Center(child: CircularProgressIndicator(),),): Scaffold(
-      extendBody: true,
-      body: PageView(
-        controller: pageController,
-        children: const [
-          HomeScreen(),
-          AddScreen(),
-          SearchScreen(),
-          ProfileScreen(),
-        ],
-        onPageChanged: (value) {
-          currentIndex = value;
-          setState(() {});
-        },
-      ),
-      bottomNavigationBar: NavigationBar(
-        selectedIndex: currentIndex,
-        elevation: 0,
-        onDestinationSelected: (value) {
-          currentIndex = value;
-          pageController.jumpToPage(currentIndex);
-          setState(() {});
-        },
-        indicatorColor: kPrimaryColor.withOpacity(0.2),
-        backgroundColor: kWhiteColor.withOpacity(0.2),
-        destinations: const [
-          NavigationDestination(
-            label: 'Home',
-            icon: Icon(Icons.home),
-          ),
-          NavigationDestination(
-            label: 'Add',
-            icon: Icon(Icons.add_circle_outline),
-          ),
-          NavigationDestination(
-            label: 'Search',
-            icon: Icon(
-              Icons.search_outlined,
+    return Provider.of<UserProvider>(context).isLoading
+        ? const Scaffold(
+            body: Center(
+              child: CircularProgressIndicator(),
             ),
-          ),
-          NavigationDestination(
-            label: 'Profile',
-            icon: Icon(Icons.person_outline),
-          ),
-        ],
-      ),
-    );
+          )
+        : Scaffold(
+            extendBody: true,
+            body: PageView(
+              controller: pageController,
+              children: const [
+                HomeScreen(),
+                AddScreen(),
+                SearchScreen(),
+                ProfileScreen(),
+              ],
+              onPageChanged: (value) {
+                currentIndex = value;
+                setState(() {});
+              },
+            ),
+            bottomNavigationBar: NavigationBar(
+              selectedIndex: currentIndex,
+              elevation: 0,
+              onDestinationSelected: (value) {
+                currentIndex = value;
+                pageController.jumpToPage(currentIndex);
+                setState(() {});
+              },
+              indicatorColor: kPinkColor,
+              backgroundColor: kWhiteColor.withOpacity(0.2),
+              surfaceTintColor: kPrimaryColor,
+              destinations: [
+                NavigationDestination(
+                  label: 'Home',
+                  icon: const Icon(Icons.home),
+                  selectedIcon: Icon(
+                    Icons.home,
+                    color: kPrimaryColor,
+                  ),
+                ),
+                NavigationDestination(
+                  label: 'Add',
+                  icon:const Icon(Icons.add_circle_outline),
+                  selectedIcon: Icon(
+                    Icons.add_circle_outline,
+                    color: kPrimaryColor,
+                  ),
+                ),
+                NavigationDestination(
+                  label: 'Search',
+                  icon: const Icon(
+                    Icons.search_outlined,
+                  ),
+                  selectedIcon: Icon(
+                    Icons.search_outlined,
+                    color: kPrimaryColor,
+                  ),
+                ),
+                NavigationDestination(
+                  label: 'Profile',
+                  icon:const Icon(Icons.person_outline),
+                  selectedIcon: Icon(
+                    Icons.person_outline,
+                    color: kPrimaryColor,
+                  ),
+                ),
+              ],
+            ),
+          );
   }
 }

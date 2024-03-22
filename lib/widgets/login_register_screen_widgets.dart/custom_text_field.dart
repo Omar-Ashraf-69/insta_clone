@@ -7,13 +7,18 @@ class CustomTextField extends StatelessWidget {
     this.suffixIcon,
     required this.label,
     this.prefixIcon,
-    required this.textEditingController, this.onChanged,
+    required this.textEditingController,
+    this.onChanged,
+    this.hintText,
+    this.isLabelSticked = false,
   });
   final TextEditingController textEditingController;
   final String label;
   final Icon? prefixIcon;
   final IconButton? suffixIcon;
   final void Function(String)? onChanged;
+  final String? hintText;
+  final bool isLabelSticked;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
@@ -29,10 +34,15 @@ class CustomTextField extends StatelessWidget {
       decoration: InputDecoration(
         prefixIcon: prefixIcon,
         suffixIcon: suffixIcon,
+        hintText: hintText,
+        floatingLabelBehavior: isLabelSticked
+            ? FloatingLabelBehavior.always
+            : FloatingLabelBehavior.auto,
         label: Text(
           label,
-          style: const TextStyle(
+          style: TextStyle(
             fontWeight: FontWeight.w500,
+            color: kPrimaryColor,
           ),
         ),
         fillColor: kWhiteColor,
