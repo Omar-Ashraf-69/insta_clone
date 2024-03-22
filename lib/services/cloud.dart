@@ -47,6 +47,59 @@ class CloudMethods {
     return response;
   }
 
+  commentToPost({
+    required String uId,
+    required String postId,
+    required String comment,
+    required String displayName,
+    required String profilePic,
+  }) async {
+    String commentId = const Uuid().v1();
+    String response = 'OOPs Error';
+    try {
+      if (comment.isNotEmpty) {
+        await FirebaseFirestore.instance
+            .collection('posts')
+            .doc(postId)
+            .collection('comments')
+            .doc(commentId)
+            .set({
+          'commentId': commentId,
+          'userId': uId,
+          'comment': comment,
+          'displayName': displayName,
+          'profilePic': profilePic,
+          'date': DateTime.now(),
+        });
+        response = 'success';
+      }
+    } catch (e) {
+      log(e.toString());
+      response = e.toString();
+    }
+    return response;
+  }
+
+  likePost({
+    required String uId,
+    required String postId,
+    required List like,
+  }) {
+    try {
+      if (like.contains(uId)) {
+        FirebaseFirestore.instance.collection('posts').doc(postId).update({
+          'like': FieldValue.arrayRemove([uId])
+        });
+      } else {
+        FirebaseFirestore.instance.collection('posts').doc(postId).update({
+          'like': FieldValue.arrayUnion([uId])
+        });
+      }
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+
   editProfile({
     required String uId,
     required String userName,
@@ -68,7 +121,6 @@ class CloudMethods {
           'bio': bio,
           'profilePic': profilePic,
         });
-        
       }
       response = 'success';
     } catch (e) {
