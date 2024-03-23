@@ -1,9 +1,12 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:social_app/colors/app_colors.dart';
 import 'package:social_app/models/user.dart';
+import 'package:social_app/screens/view_user_profile_screen.dart';
 import 'package:social_app/widgets/login_register_screen_widgets.dart/custom_text_field.dart';
 import 'package:social_app/widgets/search_screen_widgets/searched_user_item_widget.dart';
 
@@ -77,10 +80,22 @@ class _SearchScreenState extends State<SearchScreen> {
                         } else {
                           return ListView.builder(
                             itemCount: snapshot.data!.docs.length,
-                            itemBuilder: (context, index) =>
-                                SearchedUserItemWidget(
-                              userModel: UserModel.fromDocument(
-                                  snapshot.data!.docs[index]),
+                            itemBuilder: (context, index) => GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          ViewUserProfileScreen(
+                                            user: UserModel.fromDocument(
+                                                snapshot.data!.docs[index]),
+                                          )),
+                                );
+                              },
+                              child: SearchedUserItemWidget(
+                                userModel: UserModel.fromDocument(
+                                    snapshot.data!.docs[index]),
+                              ),
                             ), // Removed const from here
                           );
                         }

@@ -112,7 +112,7 @@ class _EditUserScreenState extends State<EditUserScreen> {
               CustomTextField(
                 prefixIcon: const Icon(Icons.person_outline),
                 label: 'Bio',
-                hintText: 'aaa',
+                hintText: userData.bio,
                 textEditingController: bioController,
                 isLabelSticked: true,
               ),

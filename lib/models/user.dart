@@ -9,6 +9,7 @@ class UserModel {
   List following;
   String displayName;
   String userName;
+  String? bio;
 
   UserModel({
     required this.userId,
@@ -19,6 +20,7 @@ class UserModel {
     required this.following,
     required this.password,
     required this.profilePic,
+    this.bio,
   });
 
   factory UserModel.fromDocument(DocumentSnapshot snap) {
@@ -32,6 +34,7 @@ class UserModel {
       following: snapshot['following'],
       password: snapshot['password'],
       profilePic: snapshot['profilePic'],
+      bio: snapshot['bio'],
     );
   }
 
@@ -45,6 +48,7 @@ class UserModel {
       'following': following,
       'password': password,
       'profilePic': profilePic,
+      'bio': bio,
     };
   }
 }
