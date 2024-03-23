@@ -20,7 +20,7 @@ class UserModel {
     required this.following,
     required this.password,
     required this.profilePic,
-    this.bio,
+    this.bio= '',
   });
 
   factory UserModel.fromDocument(DocumentSnapshot snap) {

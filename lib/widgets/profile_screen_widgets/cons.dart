@@ -24,3 +24,33 @@ Stream<QuerySnapshot> getPostsStream({String? userId}) {
 getUserData(String uid) {
   return FirebaseFirestore.instance.collection('users').doc(uid).snapshots();
 }
+getUserDetials({required String uid}) {
+  return  FirebaseFirestore.instance.collection('users').doc(uid).get();
+}
+
+
+getFollowersAndFollwingCount(
+  {
+    required String userId,
+    required int followersCount,
+    required int followingCount,
+    required bool isFollowing,
+  }
+) async {
+    QuerySnapshot followersCounter = await FirebaseFirestore.instance
+        .collection('users')
+        .doc( userId)
+        .collection('followers')
+        .get();
+    QuerySnapshot followingCounter = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(userId)
+        .collection('following')
+        .get();
+        followersCounter.docs.isNotEmpty ? isFollowing = true : isFollowing = false;
+    
+        followersCount = followersCounter.docs.length;
+
+        followingCount = followingCounter.docs.length;
+      
+  }

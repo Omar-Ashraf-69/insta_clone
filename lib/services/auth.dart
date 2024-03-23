@@ -18,7 +18,8 @@ class Authentication {
       {required String email,
       required String pass,
       required String displayName,
-      required String userName}) async {
+      required String userName
+      }) async {
     String message = '';
     try {
       final userCredential =

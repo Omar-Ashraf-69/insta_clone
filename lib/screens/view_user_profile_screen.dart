@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:social_app/colors/app_colors.dart';
 import 'package:social_app/models/post.dart';
 import 'package:social_app/models/user.dart';
+import 'package:social_app/services/cloud.dart';
 import 'package:social_app/widgets/home_screen_widgets/feeds_post_widget.dart';
 import 'package:social_app/widgets/login_register_screen_widgets.dart/custom_button_widget.dart';
 import 'package:social_app/widgets/profile_screen_widgets/cons.dart';
@@ -23,6 +24,32 @@ class ViewUserProfileScreen extends StatefulWidget {
 class _ViewUserProfileScreenState extends State<ViewUserProfileScreen>
     with TickerProviderStateMixin {
   late TabController tabController = TabController(length: 2, vsync: this);
+  bool isFollowing = false;
+  int followersCount = 0;
+  int followingCount = 0;
+  getFollowersAndFollwingCount() async {
+    dynamic followersCounter;
+    dynamic followingCounter =
+        followersCounter = await getUserDetials(uid: widget.user.userId);
+
+    log(" here inside the func followers ${followersCounter['followers'].length.toString()}");
+    log(" here inside the func following ${followingCounter['following'].length.toString()}");
+    followersCounter['followers'].isNotEmpty
+        ? isFollowing = true
+        : isFollowing = false;
+    if (mounted) {
+      setState(() {
+        followersCount = followersCounter['followers'].length;
+        followingCount = followingCounter['following'].length;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    getFollowersAndFollwingCount();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,9 +74,11 @@ class _ViewUserProfileScreenState extends State<ViewUserProfileScreen>
                 Spacer(),
                 FollowingCardWidget(
                   label: 'Followers',
+                  counter: followersCount.toString(),
                 ),
                 FollowingCardWidget(
                   label: 'Following',
+                  counter: followingCount.toString(),
                 ),
               ],
             ),
@@ -74,14 +103,31 @@ class _ViewUserProfileScreenState extends State<ViewUserProfileScreen>
                   ),
                 ),
                 ElevatedButton(
-                  onPressed: () {},
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text('Follow'),
-                      Icon(Icons.add),
-                    ],
-                  ),
+                  onPressed: () async {
+                    dynamic currentUser = await getUserDetials(
+                        uid: FirebaseAuth.instance.currentUser!.uid);
+                    CloudMethods().followUser(
+                        uId: widget.user.userId,
+                        following: currentUser['following'],
+                        followers: widget.user.followers);
+                    await getFollowersAndFollwingCount();
+                    log('followers: $followersCount, following: $followingCount, isFollowing: $isFollowing');
+                  },
+                  child: isFollowing
+                      ? Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text('Following'),
+                            Icon(Icons.check),
+                          ],
+                        )
+                      : Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text('Follow'),
+                            Icon(Icons.add),
+                          ],
+                        ),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: kSeconderyColor,
                     foregroundColor: kWhiteColor,

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:social_app/firebase_options.dart';
 import 'package:social_app/layout.dart';
+import 'package:social_app/providers/followers_and_following_provider.dart';
 import 'package:social_app/providers/user_provider.dart';
 import 'package:social_app/screens/auth/login_screen.dart';
 import 'package:social_app/screens/edit_user_screen.dart';
@@ -23,8 +24,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => UserProvider(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => UserProvider()),
+        ChangeNotifierProvider(create: (context) => FollowingsAndFollowersProvider()),
+      ],
       child: MaterialApp(
         title: 'Insta',
         debugShowCheckedModeBanner: false,

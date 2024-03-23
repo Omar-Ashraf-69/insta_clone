@@ -10,6 +10,7 @@ import 'package:provider/provider.dart';
 import 'package:social_app/colors/app_colors.dart';
 import 'package:social_app/models/post.dart';
 import 'package:social_app/models/user.dart';
+import 'package:social_app/providers/followers_and_following_provider.dart';
 import 'package:social_app/providers/user_provider.dart';
 import 'package:social_app/screens/edit_user_screen.dart';
 import 'package:social_app/services/auth.dart';
@@ -33,6 +34,7 @@ class _ProfileScreenState extends State<ProfileScreen>
   @override
   void initState() {
     Provider.of<UserProvider>(context, listen: false).getUserDetails();
+    Provider.of<FollowingsAndFollowersProvider>(context, listen: false).getFollowersAndFollwingCount();
     super.initState();
   }
 
@@ -44,6 +46,7 @@ class _ProfileScreenState extends State<ProfileScreen>
 
   Widget build(BuildContext context) {
     final UserModel user = Provider.of<UserProvider>(context).user!;
+    
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -84,9 +87,11 @@ class _ProfileScreenState extends State<ProfileScreen>
                       ),
                 Spacer(),
                 FollowingCardWidget(
+                  counter: Provider.of<FollowingsAndFollowersProvider>(context, listen: false).followersCount.toString(),
                   label: 'Followers',
                 ),
                 FollowingCardWidget(
+                  counter: Provider.of<FollowingsAndFollowersProvider>(context, listen: false).followingCount.toString(),
                   label: 'Following',
                 ),
               ],

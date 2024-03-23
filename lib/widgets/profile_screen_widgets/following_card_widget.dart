@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:image_stack/image_stack.dart';
 import 'package:social_app/colors/app_colors.dart';
@@ -6,9 +5,10 @@ import 'package:social_app/colors/app_colors.dart';
 class FollowingCardWidget extends StatelessWidget {
   const FollowingCardWidget({
     super.key,
-    required this.label,
+    required this.label, required this.counter,
   });
   final String label;
+  final String counter;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -26,7 +26,7 @@ class FollowingCardWidget extends StatelessWidget {
           children: [
             ImageStack(
               imageSource: ImageSource.Asset,
-              imageList:const [
+              imageList: const [
                 'assets/man.png',
                 'assets/woman.png',
               ],
@@ -35,7 +35,7 @@ class FollowingCardWidget extends StatelessWidget {
               imageBorderWidth: 2,
               imageBorderColor: kWhiteColor,
             ),
-            Text("0 $label"),
+            Text("$counter $label"),
           ],
         ),
       ),

@@ -30,7 +30,7 @@ class _FeedPostWidgetState extends State<FeedPostWidget> {
         .doc(widget.postModel.postId)
         .collection('comments')
         .get();
-    if (this.mounted) {
+    if (mounted) {
       setState(() {
         count = commentCounter.docs.length;
       });

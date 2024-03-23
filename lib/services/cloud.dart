@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:social_app/models/post.dart';
 import 'package:social_app/services/storage.dart';
@@ -94,6 +95,43 @@ class CloudMethods {
         FirebaseFirestore.instance.collection('posts').doc(postId).update({
           'like': FieldValue.arrayUnion([uId])
         });
+      }
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+
+  followUser({
+    required String uId,
+    required List following,
+    required List followers,
+  }) {
+    try {
+      if (following.contains(uId)) {
+        FirebaseFirestore.instance
+            .collection('users')
+            .doc(FirebaseAuth.instance.currentUser!.uid)
+            .update({
+          'following': FieldValue.arrayRemove([uId])
+        });
+
+        FirebaseFirestore.instance.collection('users').doc(uId).update({
+          'followers':
+              FieldValue.arrayRemove([FirebaseAuth.instance.currentUser!.uid])
+        });
+        log('unfollowed');
+      } else {
+        FirebaseFirestore.instance
+            .collection('users')
+            .doc(FirebaseAuth.instance.currentUser!.uid)
+            .update({
+          'following': FieldValue.arrayUnion([uId])
+        });
+        FirebaseFirestore.instance.collection('users').doc(uId).update({
+          'followers':
+              FieldValue.arrayUnion([FirebaseAuth.instance.currentUser!.uid])
+        });
+        log('followed');
       }
     } catch (e) {
       log(e.toString());
