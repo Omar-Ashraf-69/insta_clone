@@ -26,18 +26,8 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: kWhiteColor,
       appBar: AppBar(
-        leading: IconButton(
-          onPressed: () {},
-          icon: const Icon(Icons.camera_alt_outlined),
-        ),
         title: const AppNameWidget(),
         centerTitle: true,
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.message_outlined),
-          ),
-        ],
       ),
       body: StreamBuilder<QuerySnapshot>(
         stream: postsStream,
@@ -51,7 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: CircularProgressIndicator(),
             );
           }
-          
+
           return Padding(
             padding: const EdgeInsets.symmetric(
               vertical: 12.0,

@@ -2,8 +2,11 @@ import 'dart:developer';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:social_app/colors/app_colors.dart';
 import 'package:social_app/helpers/picker.dart';
+import 'package:social_app/models/user.dart';
+import 'package:social_app/providers/user_provider.dart';
 import 'package:social_app/services/cloud.dart';
 
 class AddScreen extends StatefulWidget {
@@ -17,6 +20,12 @@ class _AddScreenState extends State<AddScreen> {
   Uint8List? file;
   TextEditingController controller = TextEditingController();
   bool isLoading = false;
+  @override
+  void initState() {
+    Provider.of<UserProvider>(context, listen: false).getUserDetails();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,7 +46,10 @@ class _AddScreenState extends State<AddScreen> {
             child: TextButton(
                 onPressed: () {
                   FocusScope.of(context).unfocus();
-                  uploadPost();
+                  uploadPost(
+                    user:
+                        Provider.of<UserProvider>(context, listen: false).user!,
+                  );
                 },
                 child: isLoading
                     ? const CircularProgressIndicator()
@@ -124,14 +136,14 @@ class _AddScreenState extends State<AddScreen> {
     );
   }
 
-  uploadPost() async {
+  uploadPost({required UserModel user}) async {
     isLoading = true;
     setState(() {});
     try {
-      String response = await CloudMethods().addPost(
-        userId: 'azGGLKYKuzYJlwBkPz1BC7OBPwg1',
-        displayName: 'kkk',
-        userName: 'omar',
+      await CloudMethods().addPost(
+        userId: user.userId,
+        displayName: user.displayName,
+        userName: user.userName,
         file: file!,
         description: controller.text,
       );
@@ -139,8 +151,6 @@ class _AddScreenState extends State<AddScreen> {
       log(e.toString());
     }
     isLoading = false;
-    setState(() {
-      
-    });
+    setState(() {});
   }
 }

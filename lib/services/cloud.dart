@@ -167,4 +167,11 @@ class CloudMethods {
     }
     return response;
   }
+  deletePost({required String postId}) async {
+    try {
+      await FirebaseFirestore.instance.collection('posts').doc(postId).delete();
+    } catch (e) {
+      log(e.toString());
+    }
+  }
 }

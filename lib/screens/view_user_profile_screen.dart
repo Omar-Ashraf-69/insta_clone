@@ -28,19 +28,13 @@ class _ViewUserProfileScreenState extends State<ViewUserProfileScreen>
   int followersCount = 0;
   int followingCount = 0;
   getFollowersAndFollwingCount() async {
-    dynamic followersCounter;
-    dynamic followingCounter =
-        followersCounter = await getUserDetials(uid: widget.user.userId);
-
-    log(" here inside the func followers ${followersCounter['followers'].length.toString()}");
-    log(" here inside the func following ${followingCounter['following'].length.toString()}");
-    followersCounter['followers'].isNotEmpty
-        ? isFollowing = true
-        : isFollowing = false;
+    dynamic userInfo = await getUserDetials(uid: widget.user.userId);
+    isFollowing =
+        userInfo['followers'].contains(FirebaseAuth.instance.currentUser!.uid);
     if (mounted) {
       setState(() {
-        followersCount = followersCounter['followers'].length;
-        followingCount = followingCounter['following'].length;
+        followersCount = userInfo['followers'].length;
+        followingCount = userInfo['following'].length;
       });
     }
   }
@@ -107,11 +101,11 @@ class _ViewUserProfileScreenState extends State<ViewUserProfileScreen>
                     dynamic currentUser = await getUserDetials(
                         uid: FirebaseAuth.instance.currentUser!.uid);
                     CloudMethods().followUser(
-                        uId: widget.user.userId,
-                        following: currentUser['following'],
-                        followers: widget.user.followers);
+                      uId: widget.user.userId,
+                      following: currentUser['following'],
+                      followers: widget.user.followers,
+                    );
                     await getFollowersAndFollwingCount();
-                    log('followers: $followersCount, following: $followingCount, isFollowing: $isFollowing');
                   },
                   child: isFollowing
                       ? Row(

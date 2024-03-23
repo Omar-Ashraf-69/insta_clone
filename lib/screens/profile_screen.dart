@@ -34,7 +34,8 @@ class _ProfileScreenState extends State<ProfileScreen>
   @override
   void initState() {
     Provider.of<UserProvider>(context, listen: false).getUserDetails();
-    Provider.of<FollowingsAndFollowersProvider>(context, listen: false).getFollowersAndFollwingCount();
+    Provider.of<FollowingsAndFollowersProvider>(context, listen: false)
+        .getFollowersAndFollwingCount();
     super.initState();
   }
 
@@ -46,7 +47,7 @@ class _ProfileScreenState extends State<ProfileScreen>
 
   Widget build(BuildContext context) {
     final UserModel user = Provider.of<UserProvider>(context).user!;
-    
+
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -87,11 +88,17 @@ class _ProfileScreenState extends State<ProfileScreen>
                       ),
                 Spacer(),
                 FollowingCardWidget(
-                  counter: Provider.of<FollowingsAndFollowersProvider>(context, listen: false).followersCount.toString(),
+                  counter: Provider.of<FollowingsAndFollowersProvider>(context,
+                          listen: false)
+                      .followersCount
+                      .toString(),
                   label: 'Followers',
                 ),
                 FollowingCardWidget(
-                  counter: Provider.of<FollowingsAndFollowersProvider>(context, listen: false).followingCount.toString(),
+                  counter: Provider.of<FollowingsAndFollowersProvider>(context,
+                          listen: false)
+                      .followingCount
+                      .toString(),
                   label: 'Following',
                 ),
               ],
@@ -165,7 +172,8 @@ class _ProfileScreenState extends State<ProfileScreen>
                   controller: tabController,
                   children: <Widget>[
                     StreamBuilder<QuerySnapshot>(
-                      stream: getPostsStream(),
+                      stream: getPostsStream(
+                          userId: FirebaseAuth.instance.currentUser!.uid),
                       builder: (context, snapshot) {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
@@ -176,8 +184,9 @@ class _ProfileScreenState extends State<ProfileScreen>
                           return Text('Error: ${snapshot.error}');
                         } else if (snapshot.data == null ||
                             snapshot.data!.docs.isEmpty) {
-                          return const Text(
-                              'No Photos found'); // Handle case when no photos are found
+                          return const Center(
+                            child: Text('No Photos found'),
+                          ); // Handle case when no photos are found
                         } else {
                           return GridView.builder(
                             itemCount: snapshot.data!.docs.length,
@@ -199,7 +208,8 @@ class _ProfileScreenState extends State<ProfileScreen>
                       },
                     ),
                     StreamBuilder<QuerySnapshot>(
-                      stream: getPostsStream(),
+                      stream: getPostsStream(
+                          userId: FirebaseAuth.instance.currentUser!.uid),
                       builder: (context, snapshot) {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
@@ -210,8 +220,9 @@ class _ProfileScreenState extends State<ProfileScreen>
                           return Text('Error: ${snapshot.error}');
                         } else if (snapshot.data == null ||
                             snapshot.data!.docs.isEmpty) {
-                          return const Text(
-                              'No Photos found'); // Handle case when no photos are found
+                          return const Center(
+                            child: Text('No Photos found'),
+                          ); // Handle case when no photos are found
                         } else {
                           return ListView.builder(
                             itemCount: snapshot.data!.docs.length,

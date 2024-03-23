@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -166,6 +167,20 @@ class _FeedPostWidgetState extends State<FeedPostWidget> {
                             icon: const Icon(Icons.comment_outlined),
                           )),
                       Text(count.toString()),
+                      const Spacer(),
+                      FirebaseAuth.instance.currentUser!.uid ==
+                              widget.postModel.userId
+                          ? IconButton(
+                              onPressed: () {
+                                CloudMethods().deletePost(
+                                    postId: widget.postModel.postId);
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(const SnackBar(
+                                  content: Text('Post Deleted'),
+                                ));
+                              },
+                              icon: const Icon(Icons.delete))
+                          : const SizedBox(),
                     ],
                   ),
                 ),
