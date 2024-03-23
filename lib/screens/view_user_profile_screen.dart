@@ -65,7 +65,7 @@ class _ViewUserProfileScreenState extends State<ViewUserProfileScreen>
                         radius: 34,
                         backgroundImage: NetworkImage(widget.user.profilePic),
                       ),
-                Spacer(),
+                const Spacer(),
                 FollowingCardWidget(
                   label: 'Followers',
                   counter: followersCount.toString(),
@@ -80,10 +80,10 @@ class _ViewUserProfileScreenState extends State<ViewUserProfileScreen>
               children: [
                 Expanded(
                   child: ListTile(
-                    contentPadding: EdgeInsets.all(0),
+                    contentPadding: const EdgeInsets.all(0),
                     title: Text(
                       widget.user.displayName,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontWeight: FontWeight.w500,
                         fontSize: 20,
                       ),
@@ -107,32 +107,32 @@ class _ViewUserProfileScreenState extends State<ViewUserProfileScreen>
                     );
                     await getFollowersAndFollwingCount();
                   },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: kSeconderyColor,
+                    foregroundColor: kWhiteColor,
+                  ),
                   child: isFollowing
-                      ? Row(
+                      ? const Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Text('Following'),
                             Icon(Icons.check),
                           ],
                         )
-                      : Row(
+                      : const Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Text('Follow'),
                             Icon(Icons.add),
                           ],
                         ),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: kSeconderyColor,
-                    foregroundColor: kWhiteColor,
-                  ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 10,
                 ),
                 IconButton(
                   onPressed: () {},
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.message,
                   ),
                   style: IconButton.styleFrom(
@@ -147,7 +147,7 @@ class _ViewUserProfileScreenState extends State<ViewUserProfileScreen>
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             widget.user.bio == ''
@@ -171,14 +171,14 @@ class _ViewUserProfileScreenState extends State<ViewUserProfileScreen>
                     ),
                     buttonColor: kPinkColor,
                   ),
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
             TabBar(
               controller: tabController,
               indicatorColor: kSeconderyColor,
               labelColor: kPrimaryColor,
-              tabs: [
+              tabs: const [
                 Tab(
                   text: 'Photos',
                 ),

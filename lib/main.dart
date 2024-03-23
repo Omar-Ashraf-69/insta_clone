@@ -7,9 +7,6 @@ import 'package:social_app/layout.dart';
 import 'package:social_app/providers/followers_and_following_provider.dart';
 import 'package:social_app/providers/user_provider.dart';
 import 'package:social_app/screens/auth/login_screen.dart';
-import 'package:social_app/screens/edit_user_screen.dart';
-import 'package:social_app/screens/profile_screen.dart';
-import 'package:social_app/screens/search_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

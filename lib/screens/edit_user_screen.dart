@@ -1,6 +1,5 @@
 import 'dart:typed_data';
 
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:social_app/colors/app_colors.dart';
@@ -19,9 +18,9 @@ class EditUserScreen extends StatefulWidget {
 }
 
 class _EditUserScreenState extends State<EditUserScreen> {
-  @override
   Uint8List? profilePic;
   bool isUpdating = false;
+  @override
   Widget build(BuildContext context) {
     UserModel userData = Provider.of<UserProvider>(context).user!;
     TextEditingController displayNameController = TextEditingController();
@@ -30,7 +29,7 @@ class _EditUserScreenState extends State<EditUserScreen> {
     return Scaffold(
       appBar: AppBar(
         surfaceTintColor: Colors.white,
-        title: Text(
+        title: const Text(
           "Profile Detials",
           style: TextStyle(
             fontSize: 22,

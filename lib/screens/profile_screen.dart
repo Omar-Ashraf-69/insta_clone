@@ -1,11 +1,8 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:image_stack/image_stack.dart';
 import 'package:provider/provider.dart';
 import 'package:social_app/colors/app_colors.dart';
 import 'package:social_app/models/post.dart';
@@ -29,7 +26,6 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen>
     with TickerProviderStateMixin {
-  @override
   late TabController tabController = TabController(length: 2, vsync: this);
   @override
   void initState() {
@@ -45,6 +41,7 @@ class _ProfileScreenState extends State<ProfileScreen>
     tabController.dispose();
   }
 
+  @override
   Widget build(BuildContext context) {
     final UserModel user = Provider.of<UserProvider>(context).user!;
 
@@ -86,7 +83,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                         radius: 34,
                         backgroundImage: NetworkImage(user.profilePic),
                       ),
-                Spacer(),
+                const Spacer(),
                 FollowingCardWidget(
                   counter: Provider.of<FollowingsAndFollowersProvider>(context,
                           listen: false)
@@ -107,10 +104,10 @@ class _ProfileScreenState extends State<ProfileScreen>
               children: [
                 Expanded(
                   child: ListTile(
-                    contentPadding: EdgeInsets.all(0),
+                    contentPadding: const EdgeInsets.all(0),
                     title: Text(
                       user.displayName,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontWeight: FontWeight.w500,
                         fontSize: 20,
                       ),
@@ -125,7 +122,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             user.bio == ''
@@ -149,14 +146,14 @@ class _ProfileScreenState extends State<ProfileScreen>
                     ),
                     buttonColor: kPinkColor,
                   ),
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
             TabBar(
               controller: tabController,
               indicatorColor: kSeconderyColor,
               labelColor: kPrimaryColor,
-              tabs: [
+              tabs: const [
                 Tab(
                   text: 'Photos',
                 ),

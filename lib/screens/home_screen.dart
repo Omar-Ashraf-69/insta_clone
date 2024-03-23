@@ -1,7 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:social_app/colors/app_colors.dart';
 import 'package:social_app/models/post.dart';
 import 'package:social_app/widgets/home_screen_widgets/feeds_post_widget.dart';
